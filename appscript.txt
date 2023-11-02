@@ -1,0 +1,31 @@
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('create');
+}
+// when click create blog
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('Blog')
+    .addItem('Create', 'showCreateModal')
+    .addToUi();
+}
+
+// open modal create blog
+function showCreateModal() {
+  var htmlOutput = HtmlService.createHtmlOutputFromFile('create')
+    .setWidth(800)
+    .setHeight(600);
+   SpreadsheetApp.getUi().showModalDialog(htmlOutput,'Blog Editor');
+}
+
+// handles events
+function insertBlog(title, image="x111", content) {
+  var activeSheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var row = activeSheet.getLastRow()+1;
+  // var id = '';
+  // var author = '';
+  // var createdAt = '';
+  // var slug	= '';
+  var data = [title, image, content];
+  activeSheet.getRange(row, 1, 1, 3).setValues([data]);
+  return "Blog inserted successfully"
+}
